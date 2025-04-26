@@ -1,0 +1,35 @@
+<h1 class="text-center">Descriptive Question Creation</h1>
+{% for exam in descriptive_count %}
+ <p>Exam:{{exam.sub}}-Descriptive:{{exam.descriptive_count}}/{{exam.number_of_questions}}</p>
+{% endfor%}
+<form action="{% url 'descriptive_exam' %}" method="post">
+    {% csrf_token %}
+
+    <table align="center">
+        <input type="hidden" name="examid" value="{{data}}">
+        <tr>
+            <th>Total marks: 
+
+            </th>
+            <td> <input type="text" id="marks" class="form-control" name="marks" required></td>
+        </tr>
+        <tr>
+            <th>question: 
+
+            </th>
+            <td><textarea type="text" cols='40' rows="5" class="form-control" id="question" name="question" required></textarea></td>
+        </tr>
+        <tr>
+
+            <th>Answers:
+            </th>
+            <td><textarea type="text" rows='10' cols='20' class="form-control" id="Answer" name="Answer" required></textarea></td>
+        </tr>
+       
+  </table>        
+  <div class="form-footer text-center pt-4">
+    <button type="submit" class="btn btn-secondary">Submit</button>
+</div>              
+</form>
+
+

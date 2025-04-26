@@ -1,0 +1,204 @@
+{% extends 'teacher/teacher_base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Creation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        th {
+            width: 30%;
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
+
+        input[type="text"], input[type="email"], input[type="file"], input[type="password"], input[type="time"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        input[type="radio"] {
+            margin-left: 10px;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-footer a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .form-footer a:hover {
+            color: #17a2b8;
+        }
+
+        button {
+            background-color: #17a2b8;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #17a2b8;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0; /* Reduced padding */
+        }
+        
+        .radio-group label {
+            margin-right: 10px; /* Reduced margin between labels */
+        }
+        
+        .radio-group input[type="radio"] {
+            margin-left: 5px; /* Slightly reduced space between the radio button and label */
+        }
+        
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exam rescheduling form</h1>
+        {% for i in name %}
+        <form action="{% url 'examcreation' %}" method="POST">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><input type="hidden" id="tcid" name="tcid" required></td>
+                </tr>
+                <tr>
+                    <th>Exam Name:</th>
+                    <td>
+                        <input type="text" id="code" name="code" value="{{ i.nameid.Name}}" readonly  required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Exam Code:</th>
+                    <td><input type="text" id="code" name="code" value="{{ i.code}}" readonly  required></td>
+                </tr>
+                <tr>
+                    <th>Subject:</th>
+                    <td><input type="text" id="subject" name="subject" value="{{ i.sub }}" readonly  required></td>
+                </tr>
+                <tr>
+                    <th>Starting Time:</th>
+                    <td><input type="time" id="start" name="start" value="{{ i.start }}" required></td>
+                </tr>
+                <tr>
+                    <th>Duration (in minutes):</th>
+                    <td><input type="text" id="duration" name="duration" value="{{ i.duration }}"readonly  required></td>
+                </tr>
+                <tr>
+                    <th>Marks:</th>
+                    <td><input type="text" id="marks" name="marks" readonly value="{{ i.marks }}" required></td>
+                </tr>
+                <tr>
+                    <th>Type Of Examination:</th>
+                    <td class="radio-group">
+                        {% if i.type == "mcq"%}
+
+                        <label for="mcq">MCQ</label>
+                        <input type="radio" id="mcq" name="type" value="mcq" checked readonly  required>
+                        <label for="discriptive">Descriptive</label>
+                        <input type="radio" id="discriptive" name="type"  readonly value="discriptive" required>
+
+                        {% else %}
+                        <label for="mcq">MCQ</label>
+                        <input type="radio" id="mcq" name="type" value="mcq"  readonly  required>
+
+                        <label for="discriptive">Descriptive</label>
+                        <input type="radio" id="discriptive" name="type" checked  readonly value="discriptive" required>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Date Of Examination:</th>
+                    <td><input type="date" id="date" name="date" value="{{ i.date }}" required></td>
+                </tr>
+                <tr>
+                    <th>Class:</th>
+                    <td><input type="text" id="grade" readonly  name="grade" value="{{ i.grade }}" required></td>
+                </tr>
+                <tr>
+                    <th>Minimum Marks:</th>
+                    <td><input type="text" id="mini" readonly  name="mini" value="{{ i.minimum }}" required></td>
+                </tr>
+                <tr>
+                    <th>Description:</th>
+                    <td><textarea id="discp" name="discp" rows="4" readonly   cols="50" placeholder="Enter exam description...">{{ i.discp }}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">reschedule Exam</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        {% endfor %}
+        
+        {% if messages %}
+        {% for msg in messages %}
+        <script>
+            alert('{{ msg }}');
+        </script>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}

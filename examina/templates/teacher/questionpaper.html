@@ -1,0 +1,124 @@
+{% extends 'teacher/teacher_base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Evaluation</title>
+
+   
+    
+    <script src="{% static 'jquery-1.8.3.min.js' %}"></script>
+   
+    <script>
+        $(document).ready(function () {
+            // Fetch MCQ details
+            $(".btndetails2").click(function () {
+            
+                var tid = $(this).data('id');
+
+                $.ajax({
+                    url: "{% url 'mcq_exam' %}",
+                    data: { 'data': tid },
+                    success: function (data) {
+                        $("#descriptive-table").empty()
+                        $("#mcq-table").html(data);
+
+                    },
+                });
+            });
+
+            // Fetch Descriptive details
+            $(".btndetails1").click(function () {
+                var tid = $(this).data('id');
+                $.ajax({
+                    url: "{% url 'descriptive_exam' %}",
+                    data: { 'data': tid },
+                    success: function (data) {
+                        $("#mcq-table").empty()
+                         $("#descriptive-table").html(data);
+                    },
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2 style="text-align: center; color: #007bff;">Exam List</h2>
+
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Start Time</th>
+                    <th>Duration</th>
+                    <th>Marks</th>
+                    <th>Type</th>
+                    <th>Grade</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Subject</th>
+                    <th>MCQ</th>
+                    <th>Descriptive</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in da %}
+                <tr>
+                    <td>{{ d.nameid.Name }}</td>
+                    <td>{{ d.code }}</td>
+                    <td>{{ d.start }}</td>
+                    <td>{{ d.duration }} minutes</td>
+                    <td>{{ d.marks }}</td>
+                    <td>{{ d.type }}</td>
+                    <td>{{ d.grade }}</td>
+                    <td>{{ d.date }}</td>
+                    <td>{{ d.discp }}</td>
+                    <td>{{ d.sub }}</td>
+                    <td><button class="btn btn-warning btndetails2" data-id="{{ d.id }}">MCQ</button></td>
+                    <td><button class="btn btn-success btndetails1" data-id="{{ d.id }}">Descriptive</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- MCQ Table -->
+        <div id="mcq-table">
+            
+                <table id="tblid"></table>
+            </form>
+        </div>
+
+        <!-- Descriptive Table -->
+        <div id="descriptive-table">
+           
+                <table id="tblid"></table>
+              
+            </form>
+        </div>
+    </div>
+</body>
+
+
+
+
+{% if messages %}
+
+    {% for msg in messages %}
+    <script>
+   alert('{{msg}}')
+    </script>
+    {% endfor %}
+
+{% endif %}
+
+
+</html>
+{% endblock %}
+

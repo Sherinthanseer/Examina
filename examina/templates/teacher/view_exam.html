@@ -1,0 +1,79 @@
+{% extends 'teacher/teacher_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="exam-list-container">
+    <h2>Manage Exams</h2>
+    <p>Here you can view and evaluate exams for your students. Click the "Evaluate" link to grade each exam.</p>
+    
+    <table class="exam-table">
+        <thead>
+            <tr>
+                <th>Exam Name</th>
+                <th>Subject</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exam in exams %}
+            <tr>
+                <td>{{ exam.nameid }}</td>
+                <td>{{ exam.sub }}</td>
+                <td>
+                    <a href="{% url 'evaluate_exam' exam.id %}" class="btn btn-primary">Evaluate</a>
+                    <a href="{% url 'reschedule' exam.id %}" class="btn btn-primary">Re-schedule</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .exam-list-container {
+        margin: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+    
+    h2 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+    
+    .exam-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    .exam-table th, .exam-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .exam-table th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+    
+    .exam-table tr:hover {
+        background-color: #f5f5f5;
+    }
+    
+    .btn {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

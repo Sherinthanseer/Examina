@@ -1,0 +1,160 @@
+{% extends 'student/student_base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ exam.name }} - Descriptive Questions</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e53935;
+        }
+        .descriptive-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .descriptive-item {
+            background: #fff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .descriptive-item strong {
+            font-size: 18px;
+            color: #333;
+        }
+        .descriptive-item textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+            margin-top: 10px;
+        }
+        .attempted {
+            color: green;
+            font-weight: bold;
+        }
+        button {
+            display: block;
+            width: 100%;
+            background-color: #17a2b8;
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+        }
+
+        .alert {
+            color: red;
+            font-size: 16px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        document.addEventListener("visibilitychange", function () {
+            if (document.hidden) {
+                fetch("/student/student_exams/log_activity/", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ activity: "Tab switched or browser minimized" }),
+                });
+                alert("You have switched away from the exam page. This action is being logged.");
+            }
+        });
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Time Left: <span class="timer" id="timer"></span></h2>
+
+    <script>
+        $(document).ready(function() {
+            setInterval(function() {
+                $.ajax({
+                    type: 'GET',
+                    url: "{% url 'get_timer' %}",
+                    success: function(response) {
+                        let timeLeft = response.time_left;
+                        if (timeLeft <= 0) {
+                            $('#timer').text("Time is Over");
+                            $('form input, form button, textarea').prop('disabled', true);
+                        } else {
+                            let hours = Math.floor(timeLeft / 3600);
+                            let minutes = Math.floor((timeLeft % 3600) / 60);
+                            let seconds = timeLeft % 60;
+                            $('#timer').text(hours + "h " + minutes + "m " + (seconds < 10 ? "0" : "") + seconds + "s");
+                        }
+                    },
+                    error: function() {
+                        alert("Error fetching timer.");
+                    }
+                });
+            }, 1000);
+        });
+    </script>
+
+    <h1>{{ exam.name }} - Descriptive Questions</h1>
+
+    <form method="post" action="{% url 'submit_descriptive' exam.id %}">
+        {% csrf_token %}
+        <ul class="descriptive-list">
+            {% for item in descriptives_with_status %}
+                <li class="descriptive-item">
+                    <strong>Question:</strong> {{ item.descriptive.question }} <br>
+                    {% if item.is_attended %}
+                        <span class="attempted">Already Attempted</span>
+                    {% else %}
+                        <div>
+                            <textarea name="descriptive_{{ item.descriptive.id }}" placeholder="Write your answer here"></textarea>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="alert" id="timer-alert"></div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,235 @@
+{% extends 'student/student_base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Teacher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        input[type="text"], input[type="file"], input[type="radio"],input[type="date"] ,input[type="email"]{
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message-bar {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        img {
+            margin-top: 10px;
+            display: block;
+            max-width: 100px;
+            border-radius: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        function validation() {
+            var alpha = /^[a-zA-Z\s]+$/;
+            var email=/^[\w\.\-\+]+@[a-zA-Z0-9\.]+\.com$/;
+            var fname = document.getElementById('fname');
+            var lname = document.getElementById('lname');
+            var experience = document.getElementById('experience');
+            var em = document.getElementById('principal_email');
+
+            if (fname.value.length==0) {
+                alert('enter first name');
+                return false;
+            }
+            else if (!fname.value.match(alpha)) {
+                alert('Invalid first name. Only letters are allowed.');
+                fname.focus();
+                return false;
+            }
+           else if (!em.value.match(email)) {
+                alert('Invalid email id');
+                em.focus();
+                return false;
+            }
+           else if (!lname.value.match(alpha)) {
+                alert('Invalid last name. Only letters are allowed.');
+                lname.focus();
+                return false;
+            }
+            if (isNaN(experience.value) || experience.value <= 0) {
+                alert('Invalid experience. Please enter a positive number.');
+                experience.focus();
+                return false;
+            }
+            return true;
+        }
+       
+    </script>
+</head>
+<body>
+    {% for i in y %}
+    <form action="{% url 'updatestudent' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>First Name: </th>
+                <td><input type="text" name="fname" id="fname" value="{{ i.user.first_name }}"></td>
+            </tr>
+            <tr>
+                <th>Last Name: </th>
+                <td><input type="text" name="lname" id="lname" value="{{ i.user.last_name }}"></td>
+            </tr>
+            <tr>
+                <th>Gender:</th>
+                <td>
+                    {% if i.gender == "Male" %}
+                    <label class="gender-labels" for="male">Male</label>
+                    <input type="radio" id="male" name="gender" value="Male"  checked required>
+                    <label class="gender-labels" for="female">Female</label>
+                    <input type="radio" id="female" name="gender" value="Female" value="{{ i.gender }}" required>
+                    {% else %}
+                    <label class="gender-labels" for="male">Male</label>
+                    <input type="radio" id="male" name="gender" value="Male"   required>
+                    <label class="gender-labels" for="female">Female</label>
+                    <input type="radio" id="female" name="gender" value="Female" checked required>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Photo:</th>
+                <td><input type="file" name="photo" accept="image/*" value="{{ i.photo.url}}" ></td>
+            </tr>
+            <tr>
+                <th>Student Email:</th>
+                <td><input type="email" id="email" name="email" value="{{ i.user.email }}"></td>
+            </tr>
+            <tr>
+                <th>Date Of Birth:</th>
+                <td><input type="date" id="date" name="date" value="{{ i.dob}}" required></td>
+            </tr>
+            <tr>
+                <th>Phone Number:</th>
+                <td><input type="text" name="phone" id="phone" value="{{ i.phone }}"></td>
+            </tr>
+            <tr>
+                <th>Institution:</th>
+                <td>
+                    <select name="institution" required class="form-control">
+                        <option value="{{i.institute.id}}">{{i.institute.name}}</option>
+                        {% for j in insti %}
+                        <option value="{{ j.id }}">{{ j.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Register Number:</th>
+                <td><input type="text" name="reg_no" id="reg_no" value="{{ i.reg_no }}" required></td>
+            </tr>
+            <tr>
+                <th>class:</th>
+                <td><input type="text" name="grade" id="grade" value="{{ i.grade }}" required></td>
+            </tr>
+            <tr>
+                <th>Admission Number:</th>
+                <td><input type="text" name="admission_no" id="admission_no" value="{{ i.admission_no }}" required></td>
+            </tr>
+            <tr>
+                <th>Section:</th>
+                <td><input type="text" name="section" id="section" value="{{ i.section }}"required></td>
+            </tr>
+            <tr>
+                <th>Year:</th>
+                <td><input type="text" name="year" id="year" value="{{ i.year }}"required></td>
+            </tr>
+            <tr>
+                <th>Student Address:</th>
+                <td><textarea id="address" name="address" rows="4" cols="50" required>{{i.address}}</textarea></td>
+            </tr>
+       
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button type="submit">Update</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    {% endfor %}
+
+    {% if messages %}
+    <div class="message-bar">
+        {% for msg in messages %}
+        {{ msg }}
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+<script>
+    function validateImage(input)
+    {
+        const file=input.files[0];
+        if(file){
+            const img=new Image();
+            img.src=URL.createObjectURL(file);
+            img.onload=function()
+            {
+                if(this.width>=600 || this.height>=600)
+                {
+                    alert("image size cannot exceed 600x600 pixels");
+                    input.value="";
+    
+                }
+            };
+        }
+    }
+    </script>
+</html>
+{% endblock %}

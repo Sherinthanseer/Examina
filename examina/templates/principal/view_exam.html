@@ -1,0 +1,86 @@
+{% extends 'principal/principal_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container my-5">
+    <h1 class="text-center">Exam Details</h1>
+    <p><strong>Exam Name:</strong>{{name }}</p>
+
+    <table class="table table-bordered table-hover mt-4">
+        <thead class="table-dark">
+            <tr>
+               
+                <th>Subject</th>
+                <th>Code</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exam in exams %}
+            <tr>
+             
+                <td>{{ exam.sub }}</td>
+                <td>{{ exam.code }}</td>
+                <td>{{ exam.date }}</td>
+                <td>{{ exam.start }}</td>
+                <td>
+                    <span class="badge {% if exam.status == 'approved' %}bg-success{% elif exam.status == 'rejected' %}bg-danger{% else %}bg-warning{% endif %}">
+                        {{ exam.status }}
+                    </span>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#examModal{{ exam.id }}">
+                        Details
+                    </button>
+                </td>
+            </tr>
+
+            <!-- Modal for Each Exam -->
+            <div class="modal fade" id="examModal{{ exam.id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ exam.id }}" aria-hidden="true" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+
+                            <h5 class="modal-title"  id="exampleModalLabel{{ exam.id }}">Exam Details - {{ exam.sub }}</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div style="padding-left: 120px;">
+                                <p><strong style="margin-right: 100px;">Code:</strong>{{ exam.code }}</p>
+                            <p><strong style="margin-right: 100px;">Date:</strong> {{ exam.date }}</p>
+                            <p><strong style="margin-right: 70px;">Duration:</strong> {{ exam.duration }} minutes</p>
+                            <p><strong style="margin-right: 89px;">class:</strong> {{ exam.grade }}</p>
+                            <p><strong style="margin-right: 87px;">Marks:</strong> {{ exam.marks }}</p>
+                            <p><strong style="margin-right: 76px;">Teacher:</strong> {{ exam.teacher }}</p>
+                            <p><strong style="margin-right: 52px;">Description:</strong> {{ exam.discp }}</p>
+                            <p><strong style="margin-right: 18px;">Minimum Marks:</strong> {{ exam.minimum }}</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6" style="text-align: end;">
+                                <a href="{% url 'approve_exam' exam.id %}" class="btn btn-success">Approve</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="{% url 'reject_exam' exam.id %}" class="btn btn-danger">Reject</a>
+                            </div>
+
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No exams available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

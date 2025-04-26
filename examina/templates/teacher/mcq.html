@@ -1,0 +1,61 @@
+<h1 class="text-center">MCQ Question Creation</h1>
+{% for exam in mcq_count %}
+ <p>Exam:{{exam.sub}}-MCQ:{{exam.mcq_count}}/{{exam.number_of_questions}}</p>
+{% endfor%}
+<form action="{% url 'mcq_exam' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="examid" value="{{ data }}">
+    <table align="center">
+        <tr>
+            <th>Exam Name</th>
+            <td>
+                <select name="exam" id="exam" required class="form-control">
+                    <option value="">Select exam</option>
+                    {% for i in exam %}
+                        <option value="{{ i.id }}">{{ i.Name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>Marks:</th>
+            <td><input type="number" class="form-control" name="marks" id="marks" required></td>
+        </tr>
+        <tr>
+            <th>Question:</th>
+            <td><input type="text" id="question" class="form-control" name="question" required></td>
+        </tr>
+        <tr>
+            <th>Option 1:</th>
+            <td><input type="text" name="option1" class="form-control" id="option1" required></td>
+        </tr>
+        <tr>
+            <th>Option 2:</th>
+            <td><input type="text" id="option2" class="form-control" name="option2" required></td>
+        </tr>
+        <tr>
+            <th>Option 3:</th>
+            <td><input type="text" id="option3" class="form-control" name="option3" required></td>
+        </tr>
+        <tr>
+            <th>Option 4:</th>
+            <td><input type="text" id="option4" class="form-control" name="option4" required></td>
+        </tr>
+        <tr>
+            <th>Correct Answer:</th>
+            <td>
+                <select name="answer" id="answer" class="form-control" required>
+                    <option value="">select option</option>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4">Option 4</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="form-footer text-center pt-4">
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </div>
+</form>
+

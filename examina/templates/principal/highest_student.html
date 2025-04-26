@@ -1,0 +1,156 @@
+{% extends 'principal/principal_base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <!-- Header Section -->
+    <div class="header">
+        <h1>class: {{ grade }}</h1>
+        <p class="subtitle">Performance Overview</p>
+    </div>
+
+    <!-- Top Student Section -->
+    <div class="card top-student">
+        <h2>🏆 Top Student</h2>
+        {% if top_student %}
+        <div class="student-info">
+            <h3><strong>Name:</strong> {{ top_student.student__user__username }}</h3>
+            <h5><strong>Total Marks:</strong> {{ top_student.annotated_total_marks  }}</h5>
+        </div>
+        {% else %}
+        <p class="no-data">No top student found for this class.</p>
+        {% endif %}
+    </div>
+
+    <div class="card all-students">
+        <h2>📋 All Students</h2>
+        {% if students_aggregated %}
+        <table class="styled-table">
+            <h3>{{institution}}</h3>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Total Marks</th>
+                    <th>Institute</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students_aggregated %}
+                <tr>
+                    <td>{{ student.student__user__username }}</td>
+                    <td>{{ student.annotated_total_marks }}</td>
+                    <td>{{ student.student__institute__name }}</td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-data">No students found for this class.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- CSS Styling -->
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f6fa;
+        color: #333;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 28px;
+        margin: 0;
+        color: #2c3e50;
+    }
+
+    .header .subtitle {
+        font-size: 16px;
+        color: #7f8c8d;
+    }
+
+    .card {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ecf0f1;
+        border-radius: 8px;
+        background-color: #ecf0f1;
+    }
+
+    .card h2 {
+        margin: 0 0 15px;
+        font-size: 20px;
+        color: #2c3e50;
+    }
+
+    .top-student {
+        background: linear-gradient(135deg, #81ecec, #74b9ff);
+        color: #fff;
+    }
+
+    .top-student .student-info p {
+        margin: 8px 0;
+        font-size: 16px;
+    }
+
+    .all-students {
+        background: #f9f9f9;
+    }
+
+    .no-data {
+        text-align: center;
+        color: #7f8c8d;
+        font-style: italic;
+        margin: 15px 0;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        text-align: left;
+        padding: 12px 15px;
+    }
+
+    .styled-table th {
+        background-color: #17a2b8;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+    }
+
+    .styled-table tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .styled-table tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .styled-table tr:hover {
+        background-color: #dff9fb;
+    }
+</style>
+{% endblock %}

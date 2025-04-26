@@ -1,0 +1,156 @@
+{% extends 'student/student_base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .result-status {
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+        }
+
+        .pass {
+            color: green;
+        }
+
+        .download-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            text-align: center;
+            background-color: #17a2b8;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background-color: #17a2b8;
+        }
+
+        .summary {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .summary.fail {
+            color: red;
+        }
+
+        .summary.pass {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Exam Results</h1>
+    <p><strong>Institution Name:</strong> {{ institution.name }}</p>
+    <p><strong>Exam Name:</strong> {{ examname }}</p>
+    <p><strong>Student Name:</strong> {{ student.user.first_name }} {{ student.user.last_name }}</p>
+
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>Maximum Marks</th>
+            <th>Pass Marks</th>
+            <th>Marks Obtained</th>
+            <th>Result</th>
+        </tr>
+        {% for e in result %}
+        <tr>
+            <td>{{ e.exams.sub }}</td>
+            <td>{{ e.exams.marks }}</td>
+            <td>{{ e.exams.minimum }}</td>
+            <td>{{ e.total_marks }}</td>
+            <td class="result-status {% if e.pass_status == 0 %}fail{% else %}pass{% endif %}">
+                {% if e.pass_status == 0 %}
+                    Fail
+                {% else %}
+                    Pass
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="summary {% if candidate_fail %}fail{% else %}pass{% endif %}">
+        {% if candidate_fail %}
+            <p>The candidate has failed the examination.</p>
+        {% else %}
+            <p>The candidate has passed the examination.</p>
+        {% endif %}
+    </div>
+
+    {% if 'download' not in request.GET %}
+    <a href="{% url 'student_view_result' %}?download=true" class="download-btn">Download Result</a>
+    {% endif %}
+</div>
+
+</body>
+</html>
+{% endblock %}

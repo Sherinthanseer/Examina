@@ -1,0 +1,125 @@
+{% extends 'principal/principal_base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid bg-primary px-0 px-md-5 mb-5">
+        <div class="row align-items-center px-3">
+          <div class="col-lg-6 text-center text-lg-left">
+            <h4 class="text-white mb-4 mt-5 mt-lg-0"> <h1> welcome {{user.username}}</h1>
+            </h4>
+            <h1 class="display-3 font-weight-bold text-white">
+                Principal Dashboard
+            </h1>
+            <p class="text-white mb-4">
+                Welcome to the Principal Dashboard. Here, you can oversee and manage all key aspects of the Kids Learning Center, 
+                including student progress, teacher performance, event planning, and administrative tasks. Stay informed and make 
+                impactful decisions to ensure a thriving learning environment for all.
+            </p>
+            <a href="" class="btn btn-secondary mt-1 py-3 px-5">View Profile</a>
+          </div>
+          <div class="col-lg-6 text-center text-lg-right">
+            <img class="img-fluid mt-5" src="{% static 'img/home2.png' %}" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid pt-5">
+        <div class="container pb-3">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4" style="padding: 30px">
+                <i
+                  class="flaticon-050-fence h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                  <a href="{% url 'registerteacher' %}">
+                    <h4>Teacher Registration</h4>
+                  </a>
+                  <p class="m-0">
+                    Register new teachers to the SmartAsess. Ensure all details are accurate to maintain a well-organized 
+                   teaching staff database.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-022-drum h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                    <a href="{% url 'viewteacher' %}">
+                        <h4>View Teacher</h4>
+                    </a>
+                    <p class="m-0">
+                        Access detailed profiles of all registered teachers, including their contact information, assigned classes, 
+                        and performance reports. 
+                    </p>
+                    
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-030-crayons h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                  <a href="{% url 'create_ticket' %}"><h4>Help Desk</h4></a>
+                  <p class="m-0">
+                    Access dedicated support for system issues, exam-related concerns, or any assistance you may need. Our team is here to ensure a seamless experience for all users.
+
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-047-backpack h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                  <a href="{% url 'principal_view_grades_list' %}"><h4>View Marks</h4></a>
+                  <p class="m-0">
+                    Access dedicated support for system issues, exam-related concerns, or any assistance you may need. 
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-025-sandwich h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                  <h4>Automated Reporting</h4>
+                  <p class="m-0">
+                    Examina offers automated report generation, which saves time and provides detailed insights into student performance. These reports can be easily shared with teachers, parents, and other stakeholders to keep everyone informed.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-047-backpack h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                  <h4>Resource Management:</h4>
+                  <p class="m-0">
+                    Principals can manage resources effectively, including scheduling exams, assigning invigilators, and coordinating with different departments. The platform streamlines these administrative tasks, making the process more efficient.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     {% endblock %}

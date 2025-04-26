@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Help Desk Tickets</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        .reply-btn {
+            color: white;
+            background-color: #17a2b8;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .reply-btn:hover {
+            background-color: #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <h2 class="mb-4">Help Desk Tickets</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Subject</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ ticket.subject }}</td>
+                <td>{{ ticket.name }}</td>
+                <td>{{ ticket.email }}</td>
+                <td>{{ ticket.created_at|date:"M d, Y H:i" }}</td>
+                <td>
+                    {% if ticket.replied %}
+                    <button class="btn btn-secondary" disabled>Replied</button>
+                    {% else %}
+                    <a href="{% url 'reply_ticket' ticket.id %}" class="btn btn-primary">Reply</a>
+                    {% endif %}               
+                 </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No tickets available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'teacher/teacher_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="title">Grades and Exams</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Exam</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grade, exam_name in grades %}
+            <tr>
+                <td>{{ grade }}</td>
+                <td>{{ exam_name }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{% url 'teacher_view_highest_mark_by_grade' grade=grade %}">
+                        View Highest Marks
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .container {
+        margin: 20px auto;
+        max-width: 800px;
+        font-family: Arial, sans-serif;
+    }
+    .title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+    }
+    .table thead {
+        background-color: #f4f4f4;
+    }
+    .table th, .table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    .btn {
+        text-decoration: none;
+        color: #fff;
+        padding: 8px 12px;
+        background-color: #17a2b8;
+        border-radius: 4px;
+    }
+    .btn:hover {
+        background-color: #17a2b8;
+    }
+</style>
+{% endblock %}

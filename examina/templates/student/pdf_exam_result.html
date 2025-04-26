@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #17a2b8;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <p><strong>Institution Name:</strong> {{ institution.name }}</p>
+    <p><strong>Exam Name:</strong> {{ examname }}</p>
+    <p><strong>Student Name:</strong> {{ student.user.first_name }} {{ student.user.last_name }}</p>
+
+    <table>
+        <tr>
+            <th>Subject</th>
+            <th>Maximum Marks</th>
+            <th>Pass Marks</th>
+            <th>Marks Obtained</th>
+            <th>Result</th>
+        </tr>
+        {% for e in result %}
+        <tr>
+            <td>{{ e.exams.sub }}</td>
+            <td>{{ e.exams.marks }}</td>
+            <td>{{ e.exams.minimum }}</td>
+            <td>{{ e.total_marks }}</td>
+            <td class="{% if e.pass_status == 0 %}fail{% else %}pass{% endif %}">
+                {% if e.pass_status == 0 %} Fail {% else %} Pass {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

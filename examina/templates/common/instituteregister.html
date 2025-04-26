@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institute Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            color: #555;
+        }
+        td {
+            color: #333;
+        }
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .form-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        function validation() {
+            var alpha = /^[a-zA-Z\s]+$/;
+            var email=/^[\w\.\-\+]+@[a-zA-Z0-9\.]+\.com$/;
+            var fname = document.getElementById('fname');
+            var lname = document.getElementById('lname');
+            var experience = document.getElementById('experience');
+            var em = document.getElementById('principal_email');
+
+            if (fname.value.length==0) {
+                alert('enter first name');
+                return false;
+            }
+            else if (!fname.value.match(alpha)) {
+                alert('Invalid first name. Only letters are allowed.');
+                fname.focus();
+                return false;
+            }
+           else if (!em.value.match(email)) {
+                alert('Invalid email id');
+                em.focus();
+                return false;
+            }
+           else if (!lname.value.match(alpha)) {
+                alert('Invalid last name. Only letters are allowed.');
+                lname.focus();
+                return false;
+            }
+            if (isNaN(experience.value) || experience.value <= 0) {
+                alert('Invalid experience. Please enter a positive number.');
+                experience.focus();
+                return false;
+            }
+            return true;
+        }
+       
+    </script>
+</head>
+<body>
+    <h2>Institute Registration Form</h2>
+    <form action="{% url 'instituteregister' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th>Institute Name:</th>
+                <td><input type="text" name="name" id="name" placeholder="Enter the institute name" required></td>
+            </tr>
+            <tr>
+                <th>Institute Code:</th>
+                <td><input type="text" name="code" id="code" placeholder="Enter the institute code"></td>
+            </tr>
+            <tr>
+                <th>Institute Address:</th>
+                <td><textarea id="address" name="address" rows="4" placeholder="Enter the institute address"></textarea></td>
+            </tr>
+            <tr>
+                <th>Institute Phone Number:</th>
+                <td><input type="text" name="phone" id="phone" placeholder="Enter the phone number" required></td>
+            </tr>
+            <tr>
+                <th>Institute Email:</th>
+                <td><input type="email" name="email" id="email" placeholder="Enter the email address" required></td>
+            </tr>
+        </table>
+        <div class="form-actions">
+            <button type="submit" onclick="return validation()">Register</button>
+        </div>
+    </form>
+</body>
+</html>
+{% endblock %}

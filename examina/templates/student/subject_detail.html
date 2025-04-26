@@ -1,0 +1,117 @@
+{% extends 'student/student_base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ subject.name }} - Resources</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h3 {
+            color: #333;
+        }
+
+        .subject-description {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .resource-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .resource-item {
+            background: #fff;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-item strong {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .resource-item p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .resource-item a {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-top: 10px;
+            color: white;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .resource-item a:hover {
+            background-color: #45a049;
+        }
+
+        .youtube-link {
+            background-color: #FF0000;
+        }
+
+        .youtube-link:hover {
+            background-color: #e60000;
+        }
+
+        .alert {
+            color: red;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>{{ subject.name }}</h1>
+    <p class="subject-description">{{ subject.description }}</p>
+
+    <h3>Resources for this Subject:</h3>
+
+    <ul class="resource-list">
+        {% for resource in resources %}
+            <li class="resource-item">
+                <strong>{{ resource.title }}</strong>
+                <p>{{ resource.description }}</p>
+                
+                {% if resource.file %}
+                    <a href="{{ resource.file.url }}" target="_blank">Download PDF</a>
+                {% endif %}
+                
+                {% if resource.youtube_link %}
+                    <a href="{{ resource.youtube_link }}" target="_blank" class="youtube-link">Watch on YouTube</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+</body>
+</html>
+{% endblock %}

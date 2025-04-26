@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .action-buttons a {
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .edit-button {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .edit-button:hover {
+            background-color: #218838;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Photo</th>
+                <th>Subject</th>
+                <th>class </th>
+                <th>Gender</th>
+                <th>Experience</th>
+                <th>Qualification</th>
+                <th>Email</th>
+                <th>Mobile No</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in da %}
+            <tr>
+                <td>{{ d.user.first_name }} {{ d.user.last_name }}</td>
+                <td><img src="{{ d.photo.url }}" alt="Teacher Photo"></td>
+                <td>{{ d.teaching_sub }}</td>
+                <td>{{ d.grade }}</td>
+                <td>{{ d.gender }}</td>
+                <td>{{ d.exp }}</td>
+                <td>{{ d.qualificationid.qualification_name }}</td>
+                <td>{{ d.user.email }}</td>
+                <td>{{ d.phone }}</td>
+                <td class="action-buttons">
+                    <a href="{% url 'approve_teacher' d.id %}" class="edit-button">approve</a>
+                    <a href="{% url 'deny_teacher' d.id %}" class="delete-button" >Deny</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

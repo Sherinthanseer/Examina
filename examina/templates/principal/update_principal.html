@@ -1,0 +1,202 @@
+{% extends 'principal/principal_base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Teacher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        input[type="text"], input[type="file"], input[type="radio"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message-bar {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        img {
+            margin-top: 10px;
+            display: block;
+            max-width: 100px;
+            border-radius: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        function validation() {
+            var alpha = /^[a-zA-Z\s]+$/;
+            var email=/^[\w\.\-\+]+@[a-zA-Z0-9\.]+\.com$/;
+            var fname = document.getElementById('fname');
+            var lname = document.getElementById('lname');
+            var experience = document.getElementById('experience');
+            var em = document.getElementById('principal_email');
+
+            if (fname.value.length==0) {
+                alert('enter first name');
+                return false;
+            }
+            else if (!fname.value.match(alpha)) {
+                alert('Invalid first name. Only letters are allowed.');
+                fname.focus();
+                return false;
+            }
+           else if (!em.value.match(email)) {
+                alert('Invalid email id');
+                em.focus();
+                return false;
+            }
+           else if (!lname.value.match(alpha)) {
+                alert('Invalid last name. Only letters are allowed.');
+                lname.focus();
+                return false;
+            }
+            if (isNaN(experience.value) || experience.value <= 0) {
+                alert('Invalid experience. Please enter a positive number.');
+                experience.focus();
+                return false;
+            }
+            return true;
+        }
+       
+    </script>
+</head>
+
+<body>
+    {% for i in y %}
+    <form action="{% url 'update_principal' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <th><label for="first_name">Name:</label></th>
+                <td>
+                    <input type="text" name="first_name" id="first_name" value="{{ i.user.first_name }}">
+                    <input type="text" name="last_name" id="last_name" value="{{ i.user.last_name }}">
+                </td>
+            </tr>
+            <tr>
+                <th><label for="photo">Photo:</label></th>
+                <td>
+                    <input type="file" name="photo" id="photo">
+                    <img src="{{ i.photo.url }}" alt="Teacher Photo">
+                </td>
+            </tr>
+            <tr>
+                <th>Institution:</th>
+                <td>
+                    <select name="institute" required>
+                        <option value="{{i.institute.id}}">{{i.institute.name}}</option>
+                        {% for j in u %}
+                        <option value="{{ j.id }}">{{ j.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="experience">Experience:</label></th>
+                <td><input type="text" name="experience" id="experience" value="{{ i.experience }}"></td>
+            </tr>
+            <tr>
+                <th>qualification:</th>
+                <td>
+                    <select name="qualification_name" required>
+                        <option value="{{i.qualificationid.id}}">{{i.qualificationid.qualification_name}}</option>
+                        {% for j in d %}
+                        <option value="{{ j.id }}">{{ j.qualification_name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                    <button type="submit">Update</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    {% endfor %}
+
+    {% if messages %}
+    <div class="message-bar">
+        {% for msg in messages %}
+        {{ msg }}
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+<script>
+    function validateImage(input)
+    {
+        const file=input.files[0];
+        if(file){
+            const img=new Image();
+            img.src=URL.createObjectURL(file);
+            img.onload=function()
+            {
+                if(this.width>=600 || this.height>=600)
+            {
+                alert("image size cannot exceed 600x600 pixels");
+                    input.value="";
+    
+                }
+            };
+        }
+    }
+    </script>
+</html>
+{% endblock %}

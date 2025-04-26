@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal Registration Form</title>
+    <style>
+      
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            margin-left: 500px;
+        }
+        h2 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+        }
+        th {
+            width: 30%;
+        }
+        input[type="text"], input[type="email"], input[type="file"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script type="text/javascript">
+        function validation() {
+            var alpha = /^[a-zA-Z\s]+$/;
+            var email=/^[\w\.\-\+]+@[a-zA-Z0-9\.]+\.com$/;
+            var fname = document.getElementById('fname');
+            var lname = document.getElementById('lname');
+            var experience = document.getElementById('experience');
+            var em = document.getElementById('principal_email');
+
+            if (fname.value.length==0) {
+                alert('enter first name');
+                return false;
+            }
+            else if (!fname.value.match(alpha)) {
+                alert('Invalid first name. Only letters are allowed.');
+                fname.focus();
+                return false;
+            }
+           else if (!em.value.match(email)) {
+                alert('Invalid email id');
+                em.focus();
+                return false;
+            }
+           else if (!lname.value.match(alpha)) {
+                alert('Invalid last name. Only letters are allowed.');
+                lname.focus();
+                return false;
+            }
+            if (isNaN(experience.value) || experience.value <= 0) {
+                alert('Invalid experience. Please enter a positive number.');
+                experience.focus();
+                return false;
+            }
+            return true;
+        }
+       
+    </script>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Principal Registration Form</h2>
+        <form method="post" enctype="multipart/form-data" onsubmit="return validation()">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th>First Name:</th>
+                    <td><input type="text" name="fname" id="fname"></td>
+                </tr>
+                <tr>
+                    <th>Last Name:</th>
+                    <td><input type="text" name="lname" id="lname"></td>
+                </tr>
+                <tr>
+                    <th>Upload Image:</th>
+                    <td><input type="file" name="photo" accept="image/*" onchange="validateImage(this)"></td>
+                </tr>
+                <tr>
+                    <th>Qualification:</th>
+                    <td>
+                        <select name="qualification">
+                            <option value="">--Select--</option>
+                            {% for i in q %}
+                            <option value="{{ i.id }}">{{ i.qualification_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Experience (Years):</th>
+                    <td><input type="text" id="experience" name="experience"></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td><input type="text" id="principal_email" name="principal_email"></td>
+                </tr>
+                <tr>
+                    <th>Institution:</th>
+                    <td>
+                        <select name="institution">
+                            <option value="">--Select--</option>
+                            {% for i in ta %}
+                            <option value="{{ i.id }}">{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Username:</th>
+                    <td><input type="text" name="username"></td>
+                </tr>
+                <tr>
+                    <th>Password:</th>
+                    <td><input type="text" name="password"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit">Register</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+
+
+<script>
+function validateImage(input)
+{
+    const file=input.files[0];
+    if(file){
+        const img=new Image();
+        img.src=URL.createObjectURL(file);
+        img.onload=function()
+        {
+            if(this.width>=600 || this.height>=600)
+            {
+                alert("image size cannot exceed 600x600 pixels");
+                input.value="";
+
+            }
+        };
+    }
+}
+</script>
+
+</html>
+{% if messages %}
+    {% for msg in messages %}
+      <script>
+        alert('{{msg}}')
+      </script>
+    {% endfor %}
+{% endif %}
+{% endblock %}

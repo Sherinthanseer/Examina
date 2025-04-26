@@ -1,0 +1,154 @@
+{% extends 'siteadmin/admin_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5">
+        <img
+          class="img-fluid rounded mb-5 mb-lg-0"
+          src="{% static 'img/about-1.jpg' %}"
+          alt=""
+        />
+      </div>
+      <div class="col-lg-7">
+        <p class="section-title pr-5">
+          <span class="pr-2">Learn About Us</span>
+        </p>
+        <h1 class="mb-4">Examina ensures a fair and effecient examination experience.</h1>
+        <p>
+          Examina offers a secure and user-friendly environment for administering,taking,and managing exams over the internet.
+          With features like convinient online access,
+          streamlined registration,Automatedgrading,and robust security.
+        </p>
+        <div class="row pt-2 pb-4">
+          <div class="col-6 col-md-4">
+            <img class="img-fluid rounded" src="{% static 'img/about-2.jpg'%}" alt="" />
+          </div>
+          <div class="col-6 col-md-8">
+            <ul class="list-inline m-0">
+              <li class="py-2 border-top border-bottom">
+                <i class="fa fa-check text-primary mr-3"></i>Seamless Convenience
+              </li>
+              <li class="py-2 border-bottom">
+                <i class="fa fa-check text-primary mr-3"></i>Effeccient Processes
+              </li>
+              <li class="py-2 border-bottom">
+                <i class="fa fa-check text-primary mr-3"></i>Enhanced Security and Analytics
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- About End -->
+
+<!-- Facilities Start -->
+<div class="container-fluid pt-5">
+  <div class="container pb-3">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 pb-1">
+        <div
+          class="d-flex bg-light shadow-sm border-top rounded mb-4"
+          style="padding: 30px"
+        >
+          <i
+            class="flaticon-050-fence h1 font-weight-normal text-primary mb-3"
+          ></i>
+          <div class="pl-4">
+            <h4>Detailed Reporting</h4>
+            <p class="m-0">
+              In-depth reports and analytics that provide valuable insights into student performance and exam outcomes, helping educators make informed decisions.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 pb-1">
+        <div
+          class="d-flex bg-light shadow-sm border-top rounded mb-4"
+          style="padding: 30px"
+        >
+          <i
+            class="flaticon-022-drum h1 font-weight-normal text-primary mb-3"
+          ></i>
+          <div class="pl-4">
+            <h4>Integrations</h4>
+            <p class="m-0">
+              Seamless integration with other educational tools and platforms, allowing for a streamlined workflow and better management of educational resources.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 pb-1">
+        <div
+          class="d-flex bg-light shadow-sm border-top rounded mb-4"
+          style="padding: 30px"
+        >
+          <i
+            class="flaticon-030-crayons h1 font-weight-normal text-primary mb-3"
+          ></i>
+          <div class="pl-4">
+            <h4>Customizable Exam Formats</h4>
+            <p class="m-0">
+              Flexibility in creating various exam types to suit different subjects and assessment needs, ensuring alignment with academic goals
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 pb-1">
+        <div
+          class="d-flex bg-light shadow-sm border-top rounded mb-4"
+          style="padding: 30px"
+        >
+          <i
+            class="flaticon-017-toy-car h1 font-weight-normal text-primary mb-3"
+          ></i>
+          <div class="pl-4">
+            <h4>Reliability</h4>
+            <p class="m-0">
+              Stable platform with minimal technical issues and downtime for smooth exam conduction.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 pb-1">
+        <div
+          class="d-flex bg-light shadow-sm border-top rounded mb-4"
+          style="padding: 30px"
+        >
+          <i
+            class="flaticon-025-sandwich h1 font-weight-normal text-primary mb-3"
+          ></i>
+          <div class="pl-4">
+            <h4>User-Friendliness</h4>
+            <p class="m-0">
+              Intuitive interface for easy navigation, reducing the learning curve for both administrators and students.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6 pb-1">
+        <div
+          class="d-flex bg-light shadow-sm border-top rounded mb-4"
+          style="padding: 30px"
+        >
+          <i
+            class="flaticon-047-backpack h1 font-weight-normal text-primary mb-3"
+          ></i>
+          <div class="pl-4">
+            <h4>Security</h4>
+            <p class="m-0">
+              Robust encryption and secure protocols to ensure safe and secure exam environments.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

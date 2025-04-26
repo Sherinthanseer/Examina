@@ -1,0 +1,121 @@
+{% extends 'teacher/teacher_base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Details</title>
+    <script src="{% static 'jquery-1.8.3.min.js' %}"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btndetails {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .btndetails:hover {
+            background-color: #0056b3;
+        }
+        #tblid {
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        #tblid th, #tblid td {
+            border: none;
+            padding: 8px;
+        }
+        #tblid th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .loading {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $(".btndetails").click(function () {
+                var id = $(this).data('id');
+
+                $("#tblid").html('<p class="loading">Loading details...</p>');
+
+                $.ajax({
+                    url: "{% url 's_details' %}",
+                    data: { 'id': id },
+                    success: function (data) {
+                        $("#tblid").empty();
+                        $("#tblid").append(data);
+                    },
+                    error: function () {
+                        $("#tblid").html('<p class="loading">Failed to load details. Please try again later.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>student Details</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>gender</th>
+                <th>class</th>
+                <th>dob</th>
+                <th>year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in da %}
+            <tr>
+                <td>{{ d.user.first_name }} {{ d.user.last_name }}</td>
+                <td>{{ d.gender }}</td>
+                <td>{{ d.grade }}</td>
+                <td>{{ d.dob}}</td>
+                <td>{{ d.year }}</td>
+                <td>
+                    <button class="btndetails" data-id="{{ d.id }}">Details</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table id="tblid">
+        <!-- Details will be dynamically loaded here -->
+    </table>
+</body>
+</html>
+{% endblock %}

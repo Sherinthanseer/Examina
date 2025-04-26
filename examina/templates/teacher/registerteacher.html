@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Registration Form</title>
+    <style>
+       
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            margin-left: 500px;
+        }
+
+        h2 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+        }
+
+        th {
+            width: 35%;
+            font-weight: normal;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="file"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script type="text/javascript">
+        function validation() {
+            var alpha = /^[a-zA-Z\s]+$/;
+            var phoneRegex = /^[0-9]{10}$/;
+            var experience = document.getElementById('experience');
+            var phone = document.getElementById('phone');
+            var fname = document.getElementById('fname');
+            var lname = document.getElementById('lname');
+
+            if (!fname.value.match(alpha)) {
+                alert('Invalid first name. Only letters are allowed.');
+                fname.focus();
+                return false;
+            }
+
+            if (!lname.value.match(alpha)) {
+                alert('Invalid last name. Only letters are allowed.');
+                lname.focus();
+                return false;
+            }
+
+            if (!phone.value.match(phoneRegex)) {
+                alert('Invalid phone number. Please enter a valid 10-digit number.');
+                phone.focus();
+                return false;
+            }
+
+            if (isNaN(experience.value) || experience.value <= 0) {
+                alert('Invalid experience. Please enter a positive number.');
+                experience.focus();
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2>Teacher Registration Form</h2>
+        <form method="post" action="{% url 'registerteacher' %}" enctype="multipart/form-data" onsubmit="return validation()">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <th>Teacher ID:</th>
+                    <td><input type="text" id="tid" name="tid" required></td>
+                </tr>
+                <tr>
+                    <th>First Name:</th>
+                    <td><input type="text" name="fname" id="fname" required></td>
+                </tr>
+                <tr>
+                    <th>Last Name:</th>
+                    <td><input type="text" name="lname" id="lname" required></td>
+                </tr>
+                <tr>
+                    <th>Institution:</th>
+                    <td>
+                        <select name="institution" required>
+                            <option value="">--Select--</option>
+                            {% for i in ta %}
+                            <option value="{{ i.id }}">{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Upload Your Image:</th>
+                    <td><input type="file" name="photo" required></td>
+                </tr>
+                <tr>
+                    <th>Qualification:</th>
+                    <td>
+                        <select name="qualification" required>
+                            <option value="">--Select--</option>
+                            {% for i in c %}
+                            <option value="{{ i.id }}">{{ i.qualification_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>class Level Of Teaching:</th>
+                    <td><input type="text" id="grade" name="grade" required></td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td><input type="email" id="email" name="email" required></td>
+                </tr>
+                <tr>
+                    <th>Phone:</th>
+                    <td><input type="text" id="phone" name="phone" required></td>
+                </tr>
+                <tr>
+                    <th>Experience(in years):</th>
+                    <td><input type="text" id="experience" name="experience" required></td>
+                </tr>
+                <tr>
+                    <th>Teaching Subject:</th>
+                    <td><input type="text" name="teaching_sub" id="teaching_sub" required></td>
+                </tr>
+                <tr>
+                    <th>Gender:</th>
+                    <td>
+                        <label for="male">Male</label>
+                        <input type="radio" id="male" name="gender" value="Male" required>
+                        <label for="female">Female</label>
+                        <input type="radio" id="female" name="gender" value="Female" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Username:</th>
+                    <td><input type="text" name="username" required></td>
+                </tr>
+                <tr>
+                    <th>Password:</th>
+                    <td><input type="text" name="password" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button type="submit">Register</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+<script>
+    function validateImage(input)
+    {
+        const file=input.files[0];
+        if(file){
+            const img=new Image();
+            img.src=URL.createObjectURL(file);
+            img.onload=function()
+            {
+                if(this.width>=600 || this.height>=600)
+                {
+                    alert("image size cannot exceed 600x600 pixels");
+                    input.value="";
+    
+                }
+            };
+        }
+    }
+    </script>
+</html>
+{% endblock %}

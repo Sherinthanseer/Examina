@@ -1,0 +1,150 @@
+{% extends 'student/student_base.html' %}
+{% load static %}
+
+
+{% block content %}
+{% if notifications %}
+      <div class="notifications">
+          <h3>New Notifications</h3>
+          <ul>
+              {% for notification in notifications %}
+                  <li>
+                      {{ notification.message }} - <small>{{ notification.created_at }}</small>
+                      <a href="{% url 'mark_notification_as_read' notification.id %}">Mark as Read</a>
+                  </li>
+              {% endfor %}
+          </ul>
+      </div>
+      {% else %}
+      <p>No new notifications.</p>
+      {% endif %}
+    <!-- Header Start -->
+    <div class="container-fluid bg-primary px-0 px-md-5 mb-5">
+        <div class="row align-items-center px-3">
+          <div class="col-lg-6 text-center text-lg-left">
+            <h4 class="text-white mb-4 mt-5 mt-lg-0"> <h1> welcome {{user.username}}</h1>
+            </h4>
+            <h1 class="display-3 font-weight-bold text-white">
+                Student Dashboard
+            </h1>
+            <p class="text-white mb-4">
+                Welcome to the Student Dashboard. Here, you can track your academic progress, access learning materials, stay updated on school events, and communicate with teachers. Utilize this platform to stay organized and achieve your learning goals in a supportive environment.
+
+            </p>
+            
+            <a href="" class="btn btn-secondary mt-1 py-3 px-5">Learn More</a>
+          </div>
+          <div class="col-lg-6 text-center text-lg-right">
+            <img class="img-fluid mt-5" src="{% static 'img/st.png' %}" alt="" />
+          </div>
+        </div>
+      </div>
+  
+      <div class="container-fluid pt-5">
+        <div class="container pb-3">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-050-fence h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                    <a href="{% url 'student_exams' %}"><h4>view exams</h4></a><br>
+                
+                  <p class="m-0">
+                    Access your upcoming and past exams here. Stay prepared by reviewing schedules, guidelines, and any additional information to excel in your assessments.
+
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-022-drum h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                    <a href="{% url 'student_view_result' %}"><h4>Exam Result</h4></a><br>
+                   
+                    <p class="m-0">
+                        View your exam results here. Get detailed insights into your performance, including marks, feedback, and areas for improvement to help you achieve your academic goals.
+
+                    </p>
+                    
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-030-crayons h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                  <a href="{% url 'create_ticket' %}"><h4>Help Desk</h4></a>
+                  <p class="m-0">
+                    Access dedicated support for system issues, exam-related concerns, or any assistance you may need. Our team is here to ensure a seamless experience for all users.
+
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-017-toy-car h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                  <a href="{% url 'change_password_student' %}"><h4>Change password</h4></a>
+                  <p class="m-0">
+                    Protect your account and ensure your personal information is secure. If you want to update your password for enhanced security, 
+
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-047-backpack h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                  <a href="{% url 'grades_list' %}"><h4>View Marks</h4></a>
+                  <p class="m-0">
+                    Access dedicated support for system issues, exam-related concerns, or any assistance you may need. Our team is here to ensure a seamless experience for all users.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-047-backpack h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                  <h4>Real-Time Feedback</h4>
+                  <p class="m-0">
+                    After completing their exams, students receive instant grading and feedback, allowing them to quickly understand their performance and areas that need improvement
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  
+     {% endblock %}

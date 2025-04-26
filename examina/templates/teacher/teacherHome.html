@@ -1,0 +1,134 @@
+{% extends 'teacher/teacher_base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid bg-primary px-0 px-md-5 mb-5">
+        <div class="row align-items-center px-3">
+          <div class="col-lg-6 text-center text-lg-left">
+            <h4 class="text-white mb-4 mt-5 mt-lg-0"> <h1> welcome {{user.username}}</h1>
+            </h4>
+            <h1 class="display-3 font-weight-bold text-white">
+                Teacher Dashboard
+            </h1>
+            <p class="text-white mb-4">
+                Welcome to the Teacher Dashboard. Here, you can manage your classes, track student progress, access teaching resources, 
+                and stay updated on school events. Use this platform to streamline your daily activities and create a positive learning 
+                environment for your students.
+            </p>
+            <a href="" class="btn btn-secondary mt-1 py-3 px-5">Learn More</a>
+          </div>
+          <div class="col-lg-6 text-center text-lg-right">
+            <img class="img-fluid mt-5" src="{% static 'img/st.png' %}" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid pt-5">
+        <div class="container pb-3">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i
+                  class="flaticon-050-fence h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                  <a href="{% url 'registerStudent' %}">
+                    <h4>Student Registration</h4>
+                  </a>
+                  <p class="m-0">
+                    Register new students to the Examina platform. Ensure all details are accurate to maintain an organized 
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-022-drum h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                    <a href="{% url 'examcreation' %}">
+                        <h4>Exam Creation</h4>
+                    </a>
+                    <p class="m-0">
+                        Create and manage exams seamlessly. Define exam details, set questions, and schedule dates to ensure a smooth 
+                   assessment.
+                    </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px"
+              >
+                <i
+                  class="flaticon-030-crayons h1 font-weight-normal text-primary mb-3"
+                ></i>
+                <div class="pl-4">
+                    <a href="{% url 'questionpaper' %}"><h4>Question paper creation</h4></a>
+                  <p class="m-0">
+                    Design and manage question papers effortlessly. Add, edit, and organize questions to align with the curriculum.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-017-toy-car h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                    <a href="{% url 'upload_resourses' %}"><h4>Upload Resources</h4></a>
+                  <p class="m-0">
+                    Upload and manage teaching resources such as study materials, assignments, and multimedia content. S
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div
+                class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-025-sandwich h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                  <a href="{% url 'view_exam' %}"><h4>view exams</h4></a>
+                  <p class="m-0">
+                    As a teacher, you can view and manage the exams for your students. You can check the upcoming exams, their details, and their status.
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-047-backpack h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                  <a href="{% url 'create_ticket' %}"><h4>Help Desk</h4></a>
+                  <p class="m-0">
+                    Access dedicated support for system issues, exam-related concerns, or any assistance you may need. Our team is here to ensure a seamless experience for all users.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 pb-1">
+              <div class="d-flex bg-light shadow-sm border-top rounded mb-4"
+                style="padding: 30px">
+                <i class="flaticon-047-backpack h1 font-weight-normal text-primary mb-3"></i>
+                <div class="pl-4">
+                  <a href="{% url 'teacher_view_grades_list' %}"><h4>View Marks</h4></a>
+                  <p class="m-0">
+                    can view marks efficiently
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+  
+    </div>
+  </div>
+</div>       
+{% endblock %}
